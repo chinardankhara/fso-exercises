@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User types text into the form<br/>and clicks the 'Save' button.
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    Note left of server: Server receives the new note data and saves it.
+    server-->>browser: HTTP 302 Found (Redirect to /exampleapp/notes)
+    deactivate server
+
+    Note right of browser: Browser receives redirect instruction.
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document (with the new note included)
+    deactivate server
+
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the CSS file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+

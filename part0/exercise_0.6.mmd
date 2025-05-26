@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User is on the SPA page (e.g., /spa).<br/>User types a new note and submits a form<br/>(e.g., a form POSTing to /exampleapp/new_note).
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    Note left of server: Server receives new note data,<br/>saves it.
+    server-->>browser: HTTP 302 Found (Redirect to /exampleapp/spa)
+    deactivate server
+
+    Note right of browser: Browser receives redirect instruction.
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document (the SPA shell)
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css (or spa.css)
+    activate server
+    server-->>browser: the CSS file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js (or main.js)
+    activate server
+    server-->>browser: the JavaScript file for SPA
+    deactivate server
+
+    Note right of browser: Browser executes the reloaded SPA's JavaScript code.
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    Note left of server: Server prepares notes data, now including the new note.
+    server-->>browser: JSON data with all notes, including the new one:<br/>[{ "content": "...", "date": "..." }, { "content": "new note", "date": "..." }, ...]
+    deactivate server
+
+    Note right of browser: SPA's JavaScript executes the callback function<br/>that renders all notes (including the new one) into the DOM.

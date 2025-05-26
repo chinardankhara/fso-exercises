@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User has already loaded the SPA page (HTML, CSS, JS)
+
+    Note right of browser: User types text into the new note form<br/>and clicks the 'Save' button.
+
+    browser->>browser: JavaScript: event.preventDefault() is called.<br/>Form data is retrieved.
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    Note left of server: Server receives the new note data (often as JSON),<br/>saves it to the "database".
+    server-->>browser: HTTP 201 Created (or 200 OK)<br/>Response may include the new note as JSON
+    deactivate server
+
+    Note right of browser: JavaScript callback function receives the server's response.
+    browser->>browser: JavaScript updates the DOM:<br/>Adds the new note to the displayed list of notes.<br/>The page does not reload.
