@@ -2,7 +2,7 @@ sequenceDiagram
     participant browser
     participant server
 
-    Note right of browser: User is on the SPA page (e.g., /spa).<br/>User types a new note and submits a form<br/>(e.g., a form POSTing to /exampleapp/new_note).
+    Note right of browser: User is on the SPA page (e.g., /spa).<br/>User types a new note and submits a form
 
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
@@ -32,7 +32,7 @@ sequenceDiagram
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
     Note left of server: Server prepares notes data, now including the new note.
-    server-->>browser: JSON data with all notes, including the new one:<br/>[{ "content": "...", "date": "..." }, { "content": "new note", "date": "..." }, ...]
+    server-->>browser: JSON data with all notes, including the new one.
     deactivate server
 
     Note right of browser: SPA's JavaScript executes the callback function<br/>that renders all notes (including the new one) into the DOM.
